@@ -6,18 +6,20 @@ const keyValueToString = ([key, value]) => {
   return `${key}=${value}`;
 };
 
-module.exports = {
-  queryString: obj => Object.entries(obj).map(keyValueToString).join('&'),
-  parse: string =>
-    Object.fromEntries(
-      string.split('&').map(position => {
-        let [key, value] = position.split('=');
+export function queryString(obj) {
+  return Object.entries(obj).map(keyValueToString).join('&');
+}
 
-        if (value.includes(',')) {
-          value = value.split(',');
-        }
+export function parse(string) {
+  return Object.fromEntries(
+    string.split('&').map(position => {
+      let [key, value] = position.split('=');
 
-        return [key, value];
-      }),
-    ),
-};
+      if (value.includes(',')) {
+        value = value.split(',');
+      }
+
+      return [key, value];
+    }),
+  );
+}
